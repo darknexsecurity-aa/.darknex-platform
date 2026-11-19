@@ -1,0 +1,2 @@
+# .darknex-platform
+DARK NEX
