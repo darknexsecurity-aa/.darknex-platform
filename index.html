@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="DARK NEX - Learn cybersecurity, ethical hacking, online safety and digital defense.">
+<meta name="theme-color" content="#09090d">
+<title>DARK NEX | Cybersecurity Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#09090d;--panel:#111118;--panel2:#171720;--red:#ff2948;--text:#f4f4f7;--muted:#9999a8;--border:#282833;--green:#39d98a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:Inter,Cairo,sans-serif;min-height:100vh}
+body.light{--bg:#f4f4f7;--panel:#fff;--panel2:#eeeef3;--text:#171720;--muted:#666675;--border:#dddde5}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 6%;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:10}
+.logo{font-size:23px;font-weight:800;letter-spacing:2px}.logo span{color:var(--red)}
+nav{display:flex;gap:22px;align-items:center}
+nav a{font-size:13px;color:var(--muted);cursor:pointer}
+nav a:hover,nav a.active{color:var(--red)}
+.header-actions{display:flex;gap:9px}
+.small-btn,.primary-btn,.outline-btn{border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:8px;font-weight:600}
+.primary-btn{background:var(--red);border-color:var(--red);color:white}
+.primary-btn:hover{filter:brightness(1.12)}
+.container{width:min(1150px,90%);margin:auto}
+.page{display:none;padding:40px 0 70px;min-height:75vh}
+.page.active{display:block}
+.hero{padding:65px 0 50px;display:grid;grid-template-columns:1.3fr .7fr;gap:35px;align-items:center}
+.eyebrow{color:var(--red);font-size:12px;font-weight:800;letter-spacing:3px;margin-bottom:18px}
+h1{font-size:clamp(38px,6vw,65px);line-height:1.08;margin-bottom:20px}
+h1 span{color:var(--red)}
+.hero p{color:var(--muted);line-height:1.8;max-width:600px}
+.hero-buttons{display:flex;gap:12px;margin-top:27px;flex-wrap:wrap}
+.hero-box{border:1px solid var(--border);background:linear-gradient(145deg,var(--panel2),var(--panel));padding:28px;border-radius:18px;box-shadow:0 20px 70px #0004}
+.terminal-top{display:flex;gap:7px;margin-bottom:22px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--red)}
+.terminal-line{font-family:monospace;color:var(--green);font-size:13px;line-height:2}
+.terminal-line span{color:var(--muted)}
+.section-title{font-size:26px;margin:25px 0 8px}
+.section-sub{color:var(--muted);margin-bottom:22px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:21px;transition:.2s}
+.card:hover{border-color:var(--red);transform:translateY(-3px)}
+.card-icon{font-size:25px;margin-bottom:15px}
+.card h3{font-size:16px;margin-bottom:9px}
+.card p{font-size:13px;line-height:1.7;color:var(--muted)}
+.card button{margin-top:17px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:25px 0}
+.stat{background:var(--panel);border:1px solid var(--border);padding:18px;border-radius:12px}
+.stat strong{font-size:27px;color:var(--red);display:block;margin-bottom:5px}
+.stat span{font-size:12px;color:var(--muted)}
+.page-heading{font-size:32px;margin-bottom:10px}
+.search{width:100%;padding:14px;background:var(--panel);border:1px solid var(--border);border-radius:9px;color:var(--text);margin:20px 0}
+input:focus{outline:1px solid var(--red)}
+.tool-output{background:#080b0c;color:#48e69a;padding:16px;border-radius:9px;font:13px monospace;min-height:48px;margin-top:14px;overflow-wrap:anywhere}
+.field{width:100%;padding:13px;background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--text);margin:10px 0}
+.progress{height:8px;background:var(--border);border-radius:20px;overflow:hidden;margin:12px 0}
+.progress div{height:100%;width:0;background:var(--red);transition:.3s}
+.quiz-option{display:block;width:100%;text-align:left;padding:13px;margin:9px 0;background:var(--panel2);border:1px solid var(--border);border-radius:8px;color:var(--text)}
+.quiz-option:hover{border-color:var(--red)}
+.notice{padding:14px;border:1px solid #a66a24;background:#a66a2418;border-radius:9px;color:var(--muted);font-size:13px;line-height:1.7;margin:15px 0}
+footer{border-top:1px solid var(--border);padding:25px 5%;text-align:center;color:var(--muted);font-size:12px}
+footer span{color:var(--red)}
+#toast{position:fixed;bottom:20px;right:20px;background:var(--red);color:white;padding:13px 18px;border-radius:9px;display:none;z-index:20}
+body[dir="rtl"]{font-family:Cairo,sans-serif}
+body[dir="rtl"] nav{direction:rtl}
+@media(max-width:800px){nav{display:none}.hero{grid-template-columns:1fr;padding-top:40px}.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.header-actions .small-btn{padding:8px}.hero-box{padding:19px}.page{padding-top:25px}}
+</style>
+</head>
+<body>
+<header>
+ <a class="logo" href="#" onclick="showPage('home')">DARK <span>NEX</span></a>
+ <nav>
+  <a onclick="showPage('home')" class="active" data-en="Home" data-ar="الرئيسية">Home</a>
+  <a onclick="showPage('academy')" data-en="Academy" data-ar="الأكاديمية">Academy</a>
+  <a onclick="showPage('tools')" data-en="Tools" data-ar="الأدوات">Tools</a>
+  <a onclick="showPage('quiz')" data-en="Quiz" data-ar="اختبار">Quiz</a>
+  <a onclick="showPage('about')" data-en="About" data-ar="حول الموقع">About</a>
+ </nav>
+ <div class="header-actions">
+  <button class="small-btn" onclick="toggleTheme()" title="Theme">☼</button>
+  <button class="small-btn" onclick="toggleLanguage()" id="langBtn">العربية</button>
+ </div>
+</header>
+
+<main class="container">
+<section class="page active" id="home">
+ <div class="hero">
+  <div>
+   <div class="eyebrow">● CYBERSECURITY • KNOWLEDGE • DEFENSE</div>
+   <h1 data-en="Enter The World Of <span>Cyber Security</span>" data-ar="اكتشف عالم <span>الأمن السيبراني</span>">Enter The World Of <span>Cyber Security</span></h1>
+   <p data-en="Learn how to protect your digital life. Explore cybersecurity, understand online threats and build your skills step by step." data-ar="تعلم كيف تحمي حياتك الرقمية. اكتشف الأمن السيبراني وافهم التهديدات الإلكترونية وطوّر مهاراتك خطوة بخطوة.">Learn how to protect your digital life.</p>
+   <div class="hero-buttons">
+    <button class="primary-btn" onclick="showPage('academy')" data-en="Start Learning →" data-ar="ابدأ التعلم ←">Start Learning →</button>
+    <button class="outline-btn" onclick="showPage('tools')" data-en="Explore Tools" data-ar="اكتشف الأدوات">Explore Tools</button>
+   </div>
+  </div>
+  <div class="hero-box">
+   <div class="terminal-top"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div>
+   <div class="terminal-line"><span>root@darknex:~$</span> system_status</div>
+   <div class="terminal-line">[+] Learning modules: ONLINE</div>
+   <div class="terminal-line">[+] Security tools: READY</div>
+   <div class="terminal-line">[+] Knowledge base: ACTIVE</div>
+   <div class="terminal-line">[+] Your journey: STARTED</div>
+   <br><div class="terminal-line"><span>root@darknex:~$</span> <span class="cursor">_</span></div>
+  </div>
+ </div>
+ <h2 class="section-title" data-en="Your Cyber Dashboard" data-ar="لوحة التحكم">Your Cyber Dashboard</h2>
+ <p class="section-sub" data-en="Your learning space at a glance." data-ar="نظرة سريعة على مساحة التعلم الخاصة بك.">Your learning space at a glance.</p>
+ <div class="stats">
+  <div class="stat"><strong>06</strong><span data-en="Learning paths" data-ar="مسارات التعلم">Learning paths</span></div>
+  <div class="stat"><strong id="scoreStat">0</strong><span data-en="Quiz points" data-ar="نقط الاختبارات">Quiz points</span></div>
+  <div class="stat"><strong>24/7</strong><span data-en="Learn anytime" data-ar="تعلم في أي وقت">Learn anytime</span></div>
+  <div class="stat"><strong>100%</strong><span data-en="Educational" data-ar="تعليمي">Educational</span></div>
+ </div>
+ <h2 class="section-title" data-en="Explore DARK NEX" data-ar="اكتشف DARK NEX">Explore DARK NEX</h2>
+ <div class="grid">
+  <article class="card"><div class="card-icon">🎓</div><h3 data-en="Cyber Academy" data-ar="أكاديمية الأمن السيبراني">Cyber Academy</h3><p data-en="Learn cybersecurity concepts from beginner to advanced." data-ar="تعلم مفاهيم الأمن السيبراني من المبتدئ إلى المتقدم.">Learn cybersecurity concepts.</p><button class="outline-btn" onclick="showPage('academy')">Explore →</button></article>
+  <article class="card"><div class="card-icon">🧰</div><h3 data-en="Security Tools" data-ar="أدوات الحماية">Security Tools</h3><p data-en="Try simple browser-based educational tools." data-ar="جرّب أدوات تعليمية بسيطة داخل المتصفح.">Try educational tools.</p><button class="outline-btn" onclick="showPage('tools')">Explore →</button></article>
+  <article class="card"><div class="card-icon">🧠</div><h3 data-en="Cyber Quiz" data-ar="اختبار الأمن السيبراني">Cyber Quiz</h3><p data-en="Test your knowledge and earn points." data-ar="اختبر معلوماتك واجمع النقط.">Test your knowledge.</p><button class="outline-btn" onclick="showPage('quiz')">Start →</button></article>
+ </div>
+</section>
+
+<section class="page" id="academy">
+ <div class="eyebrow">DARK NEX / ACADEMY</div>
+ <h2 class="page-heading" data-en="Cyber Academy" data-ar="أكاديمية الأمن السيبراني">Cyber Academy</h2>
+ <p class="section-sub" data-en="Choose a path and start learning." data-ar="اختر مسارك وابدأ التعلم.">Choose a path and start learning.</p>
+ <input class="search" id="lessonSearch" placeholder="Search lessons..." oninput="filterCards('lessonSearch','lessonGrid')">
+ <div class="grid" id="lessonGrid">
+  <article class="card"><div class="card-icon">🔐</div><h3>01 — Online Safety</h3><p>Protect your accounts, devices and personal information.</p><button class="outline-btn" onclick="lesson('Online Safety','Use unique passwords, enable multi-factor authentication, update your devices and avoid suspicious links.')">Open lesson</button></article>
+  <article class="card"><div class="card-icon">🎣</div><h3>02 — Phishing Awareness</h3><p>Recognize suspicious messages, fake websites and social engineering.</p><button class="outline-btn" onclick="lesson('Phishing Awareness','Check the sender, inspect links carefully, watch for urgency and never share passwords through message links.')">Open lesson</button></article>
+  <article class="card"><div class="card-icon">🛡️</div><h3>03 — Password Security</h3><p>Understand strong passwords and multi-factor authentication.</p><button class="outline-btn" onclick="lesson('Password Security','Use long, unique passwords. A password manager can help. Enable MFA wherever possible.')">Open lesson</button></article>
+  <article class="card"><div class="card-icon">🌐</div><h3>04 — Network Basics</h3><p>Learn IP addresses, DNS, routers and network fundamentals.</p><button class="outline-btn" onclick="lesson('Network Basics','An IP address identifies a network interface. DNS translates domain names into IP addresses. Routers connect networks.')">Open lesson</button></article>
+  <article class="card"><div class="card-icon">💻</div><h3>05 — Ethical Hacking</h3><p>Learn authorization, responsible testing and security principles.</p><button class="outline-btn" onclick="lesson('Ethical Hacking','Only test systems when you have explicit permission. Define scope, document findings and report vulnerabilities responsibly.')">Open lesson</button></article>
+  <article class="card"><div class="card-icon">🧪</div><h3>06 — Security Lab</h3><p>Understand safe practice environments and defensive exercises.</p><button class="outline-btn" onclick="lesson('Security Lab','Practice in intentionally vulnerable labs or your own isolated virtual machines. Never test real systems without permission.')">Open lesson</button></article>
+ </div>
+ <div class="card" id="lessonBox" style="display:none;margin-top:20px">
+  <h3 id="lessonTitle">Lesson</h3><p id="lessonText"></p><button class="primary-btn" onclick="closeLesson()">Close lesson</button>
+ </div>
+</section>
+
+<section class="page" id="tools">
+ <div class="eyebrow">DARK NEX / TOOLKIT</div>
+ <h2 class="page-heading">Security Tools</h2>
+ <p class="section-sub">Simple educational tools that run in your browser.</p>
+ <div class="grid">
+  <article class="card">
+   <div class="card-icon">🔑</div><h3>Password Strength Checker</h3>
+   <p>Check password strength locally. Your password is not sent to a server.</p>
+   <input class="field" id="passwordInput" type="password" placeholder="Enter a test password">
+   <button class="primary-btn" onclick="checkPassword()">Check strength</button>
+   <div class="progress"><div id="strengthBar"></div></div>
+   <p id="strengthText">Your result will appear here.</p>
+  </article>
+  <article class="card">
+   <div class="card-icon">🎣</div><h3>Phishing Awareness Simulator</h3>
+   <p>Read this sample message and decide whether it is suspicious.</p>
+   <div class="tool-output">URGENT: Your account will be closed! Click this unknown link immediately to verify your password.</div>
+   <button class="outline-btn" onclick="showToast('Warning signs: urgency, threat and a request for credentials. Never enter passwords through unexpected links.')">Analyze message</button>
+  </article>
+  <article class="card">
+   <div class="card-icon">🔎</div><h3>URL Safety Checklist</h3>
+   <p>Use this checklist when you receive an unfamiliar link.</p>
+   <ul style="color:var(--muted);font-size:13px;line-height:2;margin:12px 0 0 18px">
+    <li>Check the exact domain spelling.</li><li>Watch for misleading subdomains.</li><li>Don't trust a lock icon alone.</li><li>Open known sites directly.</li>
+   </ul>
+  </article>
+  <article class="card">
+   <div class="card-icon">🧩</div><h3>Cyber Glossary</h3>
+   <p>Quick explanations of common cybersecurity terms.</p>
+   <select class="field" id="glossary" onchange="explainTerm()">
+    <option value="">Choose a term</option><option value="MFA">MFA</option><option value="Firewall">Firewall</option><option value="Malware">Malware</option><option value="Encryption">Encryption</option><option value="Phishing">Phishing</option>
+   </select>
+   <div class="tool-output" id="glossaryOutput">Select a term to see its meaning.</div>
+  </article>
+  <article class="card">
+   <div class="card-icon">📝</div><h3>Security Checklist</h3>
+   <p>Tick the steps you have completed.</p>
+   <label><input type="checkbox"> Enable MFA</label><br><br>
+   <label><input type="checkbox"> Update my devices</label><br><br>
+   <label><input type="checkbox"> Use unique passwords</label><br><br>
+   <label><input type="checkbox"> Back up important files</label>
+  </article>
+  <article class="card">
+   <div class="card-icon">📚</div><h3>Learning Resources</h3>
+   <p>Explore trusted cybersecurity learning resources.</p>
+   <p style="margin-top:12px"><a href="https://owasp.org/" target="_blank" rel="noopener">OWASP ↗</a></p>
+   <p><a href="https://www.cisa.gov/" target="_blank" rel="noopener">CISA ↗</a></p>
+   <p><a href="https://www.cybersecurity.gov/" target="_blank" rel="noopener">Cybersecurity.gov ↗</a></p>
+  </article>
+ </div>
+ <div class="notice">Safety note: These tools are educational. The password checker runs locally in this page; do not enter a password you actually use.</div>
+</section>
+
+<section class="page" id="quiz">
+ <div class="eyebrow">DARK NEX / CHALLENGE</div>
+ <h2 class="page-heading">Cybersecurity Quiz</h2>
+ <p class="section-sub">Answer the questions and test your knowledge.</p>
+ <div class="card" style="max-width:700px">
+  <div style="display:flex;justify-content:space-between;color:var(--muted);font-size:13px"><span id="questionCount">Question 1 of 5</span><span id="quizScore">Score: 0</span></div>
+  <div class="progress"><div id="quizProgress"></div></div>
+  <h3 id="question" style="margin:20px 0">What does MFA stand for?</h3>
+  <div id="options"></div>
+  <p id="quizFeedback" style="margin:15px 0;color:var(--muted)"></p>
+  <button class="primary-btn" id="nextQuestion" onclick="nextQuestion()" style="display:none">Next question →</button>
+  <button class="outline-btn" id="restartQuiz" onclick="startQuiz()" style="display:none">Try again</button>
+ </div>
+</section>
+
+<section class="page" id="about">
+ <div class="eyebrow">DARK NEX / OUR MISSION</div>
+ <h2 class="page-heading">About DARK NEX</h2>
+ <div class="card" style="max-width:800px">
+  <h3>Knowledge is your first line of defense.</h3>
+  <p style="margin-top:14px">DARK NEX is an educational cybersecurity project designed to help people understand digital security, recognize online threats and learn responsible security practices.</p>
+  <h3 style="margin-top:25px">Our principles</h3>
+  <p style="margin-top:10px">• Education for everyone<br>• Responsible and ethical learning<br>• Privacy and digital safety<br>• Practice only with permission</p>
+ </div>
+ <h2 class="section-title">Frequently Asked Questions</h2>
+ <div class="grid">
+  <article class="card"><h3>Is DARK NEX free?</h3><p>Yes. This educational website is free to use.</p></article>
+  <article class="card"><h3>Can I learn from zero?</h3><p>Yes. Start with the beginner lessons in the Academy.</p></article>
+  <article class="card"><h3>Is this real hacking software?</h3><p>No. The tools on this page are safe educational demonstrations.</p></article>
+ </div>
+</section>
+</main>
+
+<footer>© <span id="year"></span> <span>DARK NEX</span> — Learn. Protect. Defend. | Educational project</footer>
+<div id="toast"></div>
+
+<script>
+let currentLang='en';
+function showPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+ const links=[...document.querySelectorAll('nav a')];
+ const index=['home','academy','tools','quiz','about'].indexOf(id);
+ if(links[index])links[index].classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleTheme(){document.body.classList.toggle('light')}
+function toggleLanguage(){
+ currentLang=currentLang==='en'?'ar':'en';
+ document.documentElement.lang=currentLang;
+ document.body.dir=currentLang==='ar'?'rtl':'ltr';
+ document.querySelectorAll('[data-en]').forEach(el=>el.innerHTML=el.dataset[currentLang]);
+ document.getElementById('langBtn').textContent=currentLang==='en'?'العربية':'English';
+}
+function showToast(message){
+ const t=document.getElementById('toast');t.textContent=message;t.style.display='block';
+ clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',4500);
+}
+function filterCards(inputId,gridId){
+ const q=document.getElementById(inputId).value.toLowerCase();
+ document.querySelectorAll('#'+gridId+' .card').forEach(c=>{
+ c.style.display=c.innerText.toLowerCase().includes(q)?'block':'none';
+ });
+}
+function lesson(title,text){
+ document.getElementById('lessonTitle').textContent=title;
+ document.getElementById('lessonText').textContent=text;
+ document.getElementById('lessonBox').style.display='block';
+ document.getElementById('lessonBox').scrollIntoView({behavior:'smooth'});
+}
+function closeLesson(){document.getElementById('lessonBox').style.display='none'}
+function checkPassword(){
+ const p=document.getElementById('passwordInput').value;
+ let score=0;
+ if(p.length>=12)score++;
+ if(/[a-z]/.test(p)&&/[A-Z]/.test(p))score++;
+ if(/[0-9]/.test(p))score++;
+ if(/[^A-Za-z0-9]/.test(p))score++;
+ const bar=document.getElementById('strengthBar');
+ bar.style.width=(score*25)+'%';
+ const labels=['Very weak','Weak','Fair','Good','Strong'];
+ document.getElementById('strengthText').textContent=p.length?labels[score]:'Enter a test password first.';
+ if(!p)bar.style.width='0%';
+}
+const terms={
+ MFA:'Multi-Factor Authentication: use more than one verification method to protect an account.',
+ Firewall:'A firewall monitors and controls network traffic according to security rules.',
+ Malware:'Malicious software designed to harm, disrupt or gain unauthorized access to systems.',
+ Encryption:'A process that transforms readable data into a protected form using cryptographic keys.',
+ Phishing:'A deceptive attempt to trick people into revealing information or taking unsafe actions.'
+};
+function explainTerm(){
+ const v=document.getElementById('glossary').value;
+ document.getElementById('glossaryOutput').textContent=terms[v]||'Select a term to see its meaning.';
+}
+const questions=[
+ {q:'What does MFA stand for?',a:['Multi-Factor Authentication','Main File Access','Multiple Firewall Application'],correct:0,why:'MFA adds extra verification steps to an account.'},
+ {q:'What should you do with a suspicious email link?',a:['Click immediately','Check it carefully and avoid opening it','Forward your password'],correct:1,why:'Unexpected links can lead to phishing websites.'},
+ {q:'What is a strong password practice?',a:['Reuse one password everywhere','Use your birthday','Use long, unique passwords'],correct:2,why:'Unique passwords reduce the impact of account breaches.'},
+ {q:'What does a firewall help do?',a:['Control network traffic','Charge your battery','Create photos'],correct:0,why:'Firewalls apply rules to network traffic.'},
+ {q:'When is security testing ethical?',a:['Whenever you want','With clear permission and scope','On any public website'],correct:1,why:'You must have authorization before testing systems.'}
+];
+let qIndex=0,score=0,answered=false;
+function startQuiz(){qIndex=0;score=0;showQuestion()}
+function showQuestion(){
+ answered=false;
+ const q=questions[qIndex];
+ document.getElementById('questionCount').textContent=`Question ${qIndex+1} of ${questions.length}`;
+ document.getElementById('quizScore').textContent='Score: '+score;
+ document.getElementById('quizProgress').style.width=(qIndex/questions.length*100)+'%';
+ document.getElementById('question').textContent=q.q;
+ document.getElementById('quizFeedback').textContent='';
+ document.getElementById('nextQuestion').style.display='none';
+ document.getElementById('restartQuiz').style.display='none';
+ const box=document.getElementById('options');box.innerHTML='';
+ q.a.forEach((answer,i)=>{
+ const b=document.createElement('button');b.className='quiz-option';b.textContent=answer;
+ b.onclick=()=>chooseAnswer(i);box.appendChild(b);
+ });
+}
+function chooseAnswer(i){
+ if(answered)return;answered=true;
+ const q=questions[qIndex];
+ if(i===q.correct){score+=10;document.getElementById('quizFeedback').textContent='Correct! '+q.why}
+ else{document.getElementById('quizFeedback').textContent='Not quite. '+q.why}
+ document.querySelectorAll('.quiz-option').forEach((b,j)=>{
+ b.disabled=true;if(j===q.correct)b.style.borderColor='var(--green)';
+ });
+ document.getElementById('quizScore').textContent='Score: '+score;
+ document.getElementById('scoreStat').textContent=score;
+ if(qIndex<questions.length-1)document.getElementById('nextQuestion').style.display='inline-block';
+ else{
+ document.getElementById('quizProgress').style.width='100%';
+ document.getElementById('restartQuiz').style.display='inline-block';
+ document.getElementById('nextQuestion').style.display='none';
+ document.getElementById('quizFeedback').textContent+=' Final score: '+score+'/50.';
+ }
+}
+function nextQuestion(){if(qIndex<questions.length-1){qIndex++;showQuestion()}}
+document.getElementById('year').textContent=new Date().getFullYear();
+startQuiz();
+</script>
+</body>
+</html>
